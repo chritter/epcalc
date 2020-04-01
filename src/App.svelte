@@ -59,7 +59,7 @@
 
 
   $: Time_to_death     = 32
-  $: logN              = Math.log(7e6)
+  $: logN              = Math.log(7e6) // Population Size
   $: N                 = Math.exp(logN)
   $: I0                = 1
   $: R0                = 2.2
@@ -94,8 +94,8 @@
                "P_SEVERE": P_SEVERE})
 
 // dt, N, I0, R0, D_incbation, D_infectious, D_recovery_mild, D_hospital_lag, D_recovery_severe, D_death, P_SEVERE, CFR, InterventionTime, InterventionAmt, duration
-
   function get_solution(dt, N, I0, R0, D_incbation, D_infectious, D_recovery_mild, D_hospital_lag, D_recovery_severe, D_death, P_SEVERE, CFR, InterventionTime, InterventionAmt, duration) {
+    // this function calculates 
 
     var interpolation_steps = 40
     var steps = 110*interpolation_steps
@@ -146,12 +146,14 @@
       return [dS, dE, dI, dMild, dSevere, dSevere_H, dFatal, dR_Mild, dR_Severe, dR_Fatal]
     }
 
+    // initialization of variables
     var v = [1 - I0/N, 0, I0/N, 0, 0, 0, 0, 0, 0, 0]
     var t = 0
 
     var P  = []
     var TI = []
     var Iters = []
+    // CR iterate over steps and calcualte variable values
     while (steps--) { 
       if ((steps+1) % (sample_step) == 0) {
             //    Dead   Hospital          Recovered        Infectious   Exposed
